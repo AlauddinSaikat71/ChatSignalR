@@ -14,7 +14,7 @@ namespace ChatSignalR.Models
         [Required]
         public String Text { get; set; }
         public DateTime When { get; set; }
-        public int UserID { get; set; }
-        public virtual AppUser AppUser { get; set; }
+        public String UserID { get; set; }
+        public virtual AppUser Sender { get; set; }
     }
 }
