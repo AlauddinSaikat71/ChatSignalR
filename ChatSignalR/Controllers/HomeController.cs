@@ -9,11 +9,15 @@ using ChatSignalR.Models;
 using ChatSignalR.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ChatSignalR.Controllers
 {
+    [Authorize]
+
     public class HomeController : Controller
     {
+        
         public readonly ApplicationDbContext _context;
         public readonly UserManager<AppUser> _userManager;
 
