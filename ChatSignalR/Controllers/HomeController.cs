@@ -14,7 +14,6 @@ namespace ChatSignalR.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         public readonly ApplicationDbContext _context;
         public readonly UserManager<AppUser> _userManager;
 
@@ -25,15 +24,13 @@ namespace ChatSignalR.Controllers
             _userManager = userManager;
         }
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
         public async Task<IActionResult> Index()
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            ViewBag.CurrentUserName = currentUser.UserName;
+            if(User.Identity.IsAuthenticated)
+            {
+                ViewBag.CurrentUserName = currentUser.UserName;
+            }
             var messages = await _context.Messages.ToListAsync();
             return View();
         }
