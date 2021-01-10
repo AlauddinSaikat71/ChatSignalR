@@ -14,7 +14,7 @@ namespace ChatSignalR.Data
         {
         }
 
-        public object Messages { get; internal set; }
+        public DbSet<Message> Messages { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
