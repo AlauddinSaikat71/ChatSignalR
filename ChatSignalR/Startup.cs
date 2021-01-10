@@ -12,6 +12,7 @@ using ChatSignalR.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ChatSignalR.Hubs;
 
 namespace ChatSignalR
 {
@@ -32,6 +33,7 @@ namespace ChatSignalR
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddSignalR();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -57,6 +59,10 @@ namespace ChatSignalR
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSignalR(route =>
+            {
+                route.MapHub<ChatHub>("/Home/Index");
+            });
 
             app.UseEndpoints(endpoints =>
             {

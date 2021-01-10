@@ -13,6 +13,9 @@ namespace ChatSignalR.Data
             : base(options)
         {
         }
+
+        public object Messages { get; internal set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

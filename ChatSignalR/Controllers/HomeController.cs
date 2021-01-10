@@ -6,20 +6,34 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ChatSignalR.Models;
+using ChatSignalR.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChatSignalR.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        public readonly ApplicationDbContext _context;
+        public readonly UserManager<AppUser> _userManager;
+
+
+        public HomeController(ApplicationDbContext context, UserManager<AppUser> userManager) 
+        {
+            _context = context;
+            _userManager = userManager;
+        }
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var currentUser = await _userManager.GetUserAsync(User);
+            var messages = await _context.Messages.ToListAsync();
             return View();
         }
 
